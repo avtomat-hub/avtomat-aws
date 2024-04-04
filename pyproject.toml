@@ -1,0 +1,56 @@
+[tool.poetry]
+name = "avtomat-aws"
+version = "0.0.1"
+description = "Automate AWS cloud operations by using pre-defined actions instead of scripting from scratch."
+authors = ["Dimitar Atanasov <dimitar@avtomat.io>"]
+license = "GPL-2.0-only"
+readme = "README.md"
+homepage = "https://avtomat.io"
+documentation = "https://docs.avtomat.io/aws/get_started"
+keywords = ["aws", "cloud", "automation", "cli", "python", "boto3"]
+include = ["CHANGELOG.md", "LICENSE"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Information Technology",
+    "License :: OSI Approved :: GNU General Public License v2 (GPLv2)",
+    "Natural Language :: English",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13"
+]
+packages = [{include = "avtomat_aws"}]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+boto3 = "^1.34"
+
+[tool.poetry.group.dev.dependencies]
+black = "^24.3.0"
+isort = "^5.13.2"
+bandit = "^1.7.8"
+safety = "^3.1.0"
+
+[tool.poetry.scripts]
+aaws = "avtomat_aws.cli.main:main"
+
+[tool.poetry.urls]
+"Bug Tracker" = "https://github.com/avtomat-hub/avtomat-aws/issues"
+"GitHub" = "https://github.com/avtomat-hub/avtomat-aws"
+
+
+[tool.commitizen]
+name = "cz_conventional_commits"
+tag_format = "$version"
+version_scheme = "semver"
+version_provider = "poetry"
+update_changelog_on_bump = true
+major_version_zero = true
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

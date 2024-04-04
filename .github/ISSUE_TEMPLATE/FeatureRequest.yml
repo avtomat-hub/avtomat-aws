@@ -1,0 +1,30 @@
+---
+name: 💡 Feature Request
+description: Request a new feature or an improvement to an existing one.
+labels: [question]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Thank You For Your Ideas!
+
+        Thank you in advance for any input you have on how we can improve our open-source product.
+        It is great to get ideas from other people's well-thought perspectives. Take a minute to
+        ponder your idea and then feel free to submit your feature/idea for review.
+
+  - type: textarea
+    id: description
+    attributes:
+      label: 💡 Feature/Idea
+      description: Enter a clear and concise description of the feature request/improvement.
+    validations:
+      required: true
+
+  - type: input
+    id: contributor
+    attributes:
+      label: ':thumbsup: Can you contribute?'
+      description: '**Optional** Add a way we can contact you here if you would like to contribute.'
+      placeholder: 'Linkedin, Email, etc.'
+    validations:
+      required: false
