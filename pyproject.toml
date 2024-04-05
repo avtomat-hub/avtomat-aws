@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "avtomat-aws"
 version = "0.0.3"
-description = "Automate AWS cloud operations by using pre-defined actions instead of scripting from scratch."
+description = "A collection of reusable Amazon Web Services actions, bringing speed and certainty to cloud operations."
 authors = ["Dimitar Atanasov <dimitar@avtomat.io>"]
 license = "GPL-2.0-only"
 readme = "README.md"
