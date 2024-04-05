@@ -3,16 +3,6 @@ name: ⛑️ Support Request
 description: Find out how to get answers and/or submit a support request.
 labels: [question]
 body:
-  - type: markdown
-    attributes:
-      value: |
-        ## 💬 Join Us on Slack!
-        If you have general questions or need help with this project, you have several options:
-
-        * Ask the question on **[our Slack channel](https:example.com)** *Fast*
-        * Submit a request here *Depends*
-        * E-mail [dimitar@avtomat.io](mailto:dimitar@avtomat.io) *Slow*
-
   - type: textarea
     id: support
     attributes:

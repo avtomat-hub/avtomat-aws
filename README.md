@@ -18,14 +18,15 @@
 <br/>
 [![version](https://img.shields.io/pypi/v/avtomat-aws?style=flat-square&label=version&color=blue)](https://github.com/avtomat-hub/avtomat-aws)
 [![build](https://img.shields.io/github/actions/workflow/status/avtomat-hub/avtomat-aws/publish-to-pypi.yml?style=flat-square)](https://github.com/avtomat-hub/avtomat-aws/actions/workflows/publish-to-pypi.yml)
-[![python](https://img.shields.io/pypi/pyversions/avtomat-aws?style=flat-square)](https://pypi.org/p/avtomat-aws)
 [![status](https://img.shields.io/pypi/status/avtomat-aws?style=flat-square)](https://pypi.org/p/avtomat-aws)
+[![downloads](https://img.shields.io/pypi/dm/avtomat-aws?style=flat-square)](https://pypi.org/project/avtomat-aws/)
+[![python](https://img.shields.io/pypi/pyversions/avtomat-aws?style=flat-square)](https://pypi.org/p/avtomat-aws)
 [![license](https://img.shields.io/github/license/avtomat-hub/avtomat-aws?style=flat-square)](https://github.com/avtomat-hub/avtomat-aws/blob/main/LICENSE)
 
 </div>
 
-> </br><h4 align="center">**A Python collection of Amazon Web Services actions. </br> 
-> Built on top of Boto3.**</h4></br>
+> </br><h4 align="center">**A collection of reusable Amazon Web Services actions, bringing speed and certainty to cloud operations. </br> 
+> Written in Python. Built on top of Boto3.**</h4></br>
 
 ---
 
@@ -36,19 +37,14 @@
   - [PyPi](#pypi)
 - [Requirements](#requirements)
 - [Contributing](#contributing)
-  - [Affiliates](#affiliates)
 - [License](#license)
-
----
 
 ## Overview
 
-This repository is home to the Avtomat AWS collection. It includes pre-defined actions for automating cloud operations on Amazon Web Services. </br> 
-The actions are written in Python and can be used as standalone scripts or incorporated into your own projects. </br> 
-Additionally, the entire collection has a CLI interface, providing easy access to actions. </br> </br>
+This repository features a collection of pre-written AWS scripts (called actions), designed to streamline daily operations - from information gathering to infrastructure changes. </br> 
+Actions are written in Python and can be used as standalone scripts, chained together to form workflows or incorporated into your own projects. </br> 
+The collection has a CLI interface, providing easy access to each action. </br> </br>
 For a list of available actions or usage instructions, see the [documentation](https://docs.avtomat.io/aws/get_started).
-
----
 
 ## Installation
 
@@ -67,7 +63,7 @@ pip install avtomat-aws
 aaws --help
 ```
 
-#### System-wide Installation (recommended: pipx)
+#### Global Installation (recommended: pipx)
 
 ```shell
 pipx install avtomat-aws
@@ -76,15 +72,11 @@ aaws --help
 
 ## Requirements
 
-To run this collection, you only need [Python3](https://www.python.org/) and [Boto3](https://boto3.amazonaws.com/v1/documentation/api/latest/index.html).
-
----
+This collection only requires [Python3](https://www.python.org/) and [Boto3](https://boto3.amazonaws.com/v1/documentation/api/latest/index.html).
 
 ## Contributing
 
 Contributions, issues, and feature requests are welcome! Feel free to check the [issues page](https://github.com/avtomat-hub/avtomat-aws/issues). <br>If you are interested in contributing or would like to make some modifications, please take a look at the [contributing guide](/docs/CONTRIBUTING.md).
-
----
 
 ## License
 

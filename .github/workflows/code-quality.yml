@@ -2,8 +2,8 @@ name: Code Quality
 
 on:
   pull_request:
-    paths:
-      - 'avtomat_aws/**'
+    branches:
+      - main
 
 jobs:
   code-quality:
