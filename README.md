@@ -28,8 +28,6 @@
 > </br><h4 align="center">**A collection of reusable Amazon Web Services actions, bringing speed and certainty to cloud operations. </br> 
 > Written in Python. Built on top of Boto3.**</h4></br>
 
----
-
 ## Table of Contents
 
 - [Overview](#overview)
@@ -72,7 +70,8 @@ aaws --help
 
 ## Requirements
 
-This collection only requires [Python3](https://www.python.org/) and [Boto3](https://boto3.amazonaws.com/v1/documentation/api/latest/index.html).
+This collection only requires [Python3](https://www.python.org/) and [Boto3](https://boto3.amazonaws.com/v1/documentation/api/latest/index.html). </br>
+AWS configuration files (`~/.aws/credentials` and `~/.aws/config`) are optional but highly recommended for falling back to Boto3 authentication flow.
 
 ## Contributing
 
