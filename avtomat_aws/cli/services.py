@@ -7,6 +7,7 @@ services = {
     ],
     "ec2": [
         "copy_snapshots",
+        "create_snapshots",
         "delete_images",
         "delete_security_groups",
         "delete_snapshots",
