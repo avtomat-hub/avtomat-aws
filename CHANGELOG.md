@@ -1,3 +1,9 @@
+## 0.1.1 (2024-04-06)
+
+### Fix
+
+- **validations**: Dummy update to force a version bump
+
 ## 0.1.0 (2024-04-06)
 
 ### Feat
