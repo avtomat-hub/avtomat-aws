@@ -61,4 +61,3 @@ def create_snapshots(**kwargs):
         logger.debug(failed)
 
     return snapshots
-
