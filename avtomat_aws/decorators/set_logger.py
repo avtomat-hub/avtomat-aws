@@ -10,7 +10,7 @@ def set_logger():
         def wrapper(**kwargs):
             # Setup logger
             set_logging()
-            logger = logging.getLogger(__name__)
+            logger = logging.getLogger("avtomat_aws")
             # Set log level
             if kwargs.get("debug"):
                 logger.setLevel(logging.DEBUG)

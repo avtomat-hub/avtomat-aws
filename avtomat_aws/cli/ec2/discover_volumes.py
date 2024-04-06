@@ -36,6 +36,12 @@ def add_cli_arguments(parser):
         help="Volume types to check, separated by space.",
         required=False,
     )
+    parser.add_argument(
+        "--root",
+        action="store_true",
+        help="Get only root volumes.",
+        required=False,
+    )
 
 
 def cli(args):

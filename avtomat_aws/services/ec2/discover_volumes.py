@@ -8,17 +8,17 @@ from avtomat_aws.helpers.set_session_objects import set_session_objects
 logger = logging.getLogger(__name__)
 
 DEFAULTS = {
-    "instance_ids": None,
+    "instance_ids": [],
     "volume_ids": [],
     "unencrypted": False,
     "detached": False,
     "types": None,
+    "root": False,
     "region": None,
     "debug": False,
     "silent": False,
 }
 RULES = [
-    {"required": ["resource_types", "tags"]},
     {
         "choice": [
             {"types": ["gp2", "gp3", "io1", "io2", "st1", "sc1", "standard"]},
@@ -53,6 +53,7 @@ def build_filters(**kwargs):
     unencrypted = kwargs.get("unencrypted")
     detached = kwargs.get("detached")
     types = kwargs.get("types")
+    root = kwargs.get("root")
 
     filters = []
     if instance_ids:
@@ -71,6 +72,10 @@ def build_filters(**kwargs):
     if types:
         logger.debug(f"Filtering for types: {types}")
         filters.append({"Name": "volume-type", "Values": types})
+    if root:
+        logger.debug("Filtering for root volumes")
+        root_devices = get_root_devices(**kwargs)
+        filters.append({"Name": "attachment.device", "Values": root_devices})
 
     return filters
 
@@ -93,3 +98,21 @@ def search_volumes(filters, **kwargs):
         volumes.append(volume.id)
 
     return volumes
+
+
+def get_root_devices(**kwargs):
+    """Get root devices for specified instances"""
+
+    session = kwargs["session"]
+    region = kwargs["region"]
+    instance_ids = kwargs.get("instance_ids")
+
+    session_objects = set_session_objects(session, resources=["ec2"], region=region)
+
+    root_devices = []
+    for instance in session_objects["ec2_resource"].instances.filter(
+        InstanceIds=instance_ids
+    ):
+        root_devices.append(instance.root_device_name)
+
+    return list(set(root_devices))
