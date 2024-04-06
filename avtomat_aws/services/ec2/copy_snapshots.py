@@ -10,7 +10,7 @@ logger = logging.getLogger(__name__)
 
 DEFAULTS = {
     "region": None,
-    "pending_limit": None,
+    "pending_limit": 20,
     "encrypt": False,
     "kms_key_id": None,
     "debug": False,
@@ -41,11 +41,8 @@ def copy_snapshots(**kwargs):
 
     snapshots = []
     pending_snapshots = set()
-    if kwargs.get("pending_limit"):
-        logger.debug(f"Custom pending limit: {kwargs['pending_limit']}")
-        pending_limit = kwargs["pending_limit"]
-    else:
-        pending_limit = 20  # AWS limit for concurrent snapshot copy operations
+    pending_limit = kwargs["pending_limit"]
+    logger.debug(f"Custom pending limit: {pending_limit}")
 
     for snapshot_id in snapshot_ids:
         while len(pending_snapshots) >= pending_limit:
