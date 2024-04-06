@@ -14,7 +14,10 @@ def set_session(**kwargs):
     if kwargs.get("silent"):
         logger.setLevel(logging.WARNING)
 
-    if kwargs.get("profile"):
+    if kwargs.get("session"):
+        logger.debug("Session explicitly supplied.")
+        session = kwargs["session"]
+    elif kwargs.get("profile"):
         session = authenticate_profile(kwargs["profile"])
     elif kwargs.get("role_arn"):
         session = authenticate_role(
@@ -26,7 +29,7 @@ def set_session(**kwargs):
         )
     else:
         logger.debug(
-            "No 'profile' or 'role_arn' or 'access_key' + 'secret_key' parameters supplied. "
+            "No 'session' or 'profile' or 'role_arn' or 'access_key' + 'secret_key' parameters supplied. "
             "Falling back to default credentials."
         )
         session = authenticate_default()
