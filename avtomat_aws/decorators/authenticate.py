@@ -7,11 +7,8 @@ def authenticate():
 
     def decorator(func):
         def wrapper(**kwargs):
-            # Check if session is not provided and create one if necessary
-            if not kwargs.get("session"):
-                kwargs["session"] = set_session(
-                    debug=kwargs.get("debug"), silent=kwargs.get("silent")
-                )
+            # Create a session
+            kwargs["session"] = set_session(**kwargs)
             # Set the region for the session
             kwargs["region"] = set_region(
                 region=kwargs.get("region"),
