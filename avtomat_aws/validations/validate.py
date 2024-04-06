@@ -2,7 +2,7 @@ from .config import config
 
 
 def validate(kwargs, param_rules):
-    """Validate input parameters"""
+    """Validate input parameters."""
 
     # Evaluate dynamic rules
     for rule in param_rules:
