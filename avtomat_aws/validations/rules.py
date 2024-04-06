@@ -45,7 +45,7 @@ def at_most_one_rule(kwargs, params):
     if len(params) < 2:
         raise ValueError("Rule 'at_most_one' requires at least two parameters")
 
-    params_defined = sum(kwargs.get(param) is not None for param in params)
+    params_defined = sum(kwargs.get(param) not in (None, []) for param in params)
     if params_defined > 1:
         raise ValueError(
             f"The following parameters cannot be used together, select only one: {params}"
