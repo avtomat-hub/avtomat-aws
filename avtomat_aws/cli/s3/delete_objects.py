@@ -6,7 +6,7 @@ ACTION_DESCRIPTION = "Delete objects from an S3 bucket."
 def add_cli_arguments(parser):
     """Argument parsing"""
 
-    required = parser.add_argument_group("required arguments")
+    required = parser.add_argument_group("required")
 
     required.add_argument(
         "--bucket", help="Name of the S3 bucket to delete objects from.", required=True

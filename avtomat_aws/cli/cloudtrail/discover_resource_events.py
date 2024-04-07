@@ -6,7 +6,7 @@ ACTION_DESCRIPTION = "Discover events for a specific resource."
 def add_cli_arguments(parser):
     """Argument parsing"""
 
-    required = parser.add_argument_group("required arguments")
+    required = parser.add_argument_group("required")
 
     required.add_argument(
         "--resource_id", help="Search events affecting this resource.", required=True

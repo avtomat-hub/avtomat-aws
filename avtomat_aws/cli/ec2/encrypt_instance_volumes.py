@@ -6,7 +6,7 @@ ACTION_DESCRIPTION = "Encrypt all EBS volumes attached to an instance."
 def add_cli_arguments(parser):
     """Argument parsing"""
 
-    required = parser.add_argument_group("required arguments")
+    required = parser.add_argument_group("required")
 
     required.add_argument(
         "--instance_id", help="Instance ID for volume encryption.", required=True
