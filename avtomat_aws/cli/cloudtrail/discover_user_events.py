@@ -1,5 +1,5 @@
-from avtomat_aws.services.cloudtrail import discover_user_events
 from avtomat_aws.helpers.cli.set_output import set_output
+from avtomat_aws.services.cloudtrail import discover_user_events
 
 ACTION_DESCRIPTION = "Discover events created by specific user."
 

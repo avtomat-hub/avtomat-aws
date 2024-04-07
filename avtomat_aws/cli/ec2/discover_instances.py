@@ -1,5 +1,5 @@
-from avtomat_aws.services.ec2 import discover_instances
 from avtomat_aws.helpers.cli.set_output import set_output
+from avtomat_aws.services.ec2 import discover_instances
 
 ACTION_DESCRIPTION = "Discover instances."
 

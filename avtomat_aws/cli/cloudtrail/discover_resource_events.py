@@ -1,5 +1,5 @@
-from avtomat_aws.services.cloudtrail import discover_resource_events
 from avtomat_aws.helpers.cli.set_output import set_output
+from avtomat_aws.services.cloudtrail import discover_resource_events
 
 ACTION_DESCRIPTION = "Discover events for a specific resource."
 

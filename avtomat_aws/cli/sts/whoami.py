@@ -1,5 +1,5 @@
-from avtomat_aws.services.sts import whoami
 from avtomat_aws.helpers.cli.set_output import set_output
+from avtomat_aws.services.sts import whoami
 
 ACTION_DESCRIPTION = "Return current entity."
 

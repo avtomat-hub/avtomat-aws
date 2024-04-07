@@ -1,5 +1,5 @@
-from avtomat_aws.services.iam import modify_users_console_access
 from avtomat_aws.helpers.cli.set_output import set_output
+from avtomat_aws.services.iam import modify_users_console_access
 
 ACTION_DESCRIPTION = "Enable or disable AWS Management Console access for an IAM user."
 

@@ -1,5 +1,5 @@
-from avtomat_aws.services.ec2 import delete_security_groups
 from avtomat_aws.helpers.cli.set_output import set_output
+from avtomat_aws.services.ec2 import delete_security_groups
 
 ACTION_DESCRIPTION = "Delete EC2 security groups."
 

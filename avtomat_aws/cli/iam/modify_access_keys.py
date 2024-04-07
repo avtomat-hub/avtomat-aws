@@ -1,5 +1,5 @@
-from avtomat_aws.services.iam import modify_access_keys
 from avtomat_aws.helpers.cli.set_output import set_output
+from avtomat_aws.services.iam import modify_access_keys
 
 ACTION_DESCRIPTION = "Enable or disable an IAM access key."
 

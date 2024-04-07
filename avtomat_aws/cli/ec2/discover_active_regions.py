@@ -1,5 +1,5 @@
-from avtomat_aws.services.ec2 import discover_active_regions
 from avtomat_aws.helpers.cli.set_output import set_output
+from avtomat_aws.services.ec2 import discover_active_regions
 
 ACTION_DESCRIPTION = "Discover active regions for an account."
 

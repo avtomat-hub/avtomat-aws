@@ -1,5 +1,5 @@
-from avtomat_aws.services.ec2 import modify_volumes
 from avtomat_aws.helpers.cli.set_output import set_output
+from avtomat_aws.services.ec2 import modify_volumes
 
 ACTION_DESCRIPTION = "Modify EBS volumes."
 

@@ -1,5 +1,5 @@
-from avtomat_aws.services.iam import discover_old_password_users
 from avtomat_aws.helpers.cli.set_output import set_output
+from avtomat_aws.services.iam import discover_old_password_users
 
 ACTION_DESCRIPTION = "Discover IAM users with passwords older than a certain age."
 

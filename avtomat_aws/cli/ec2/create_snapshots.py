@@ -1,5 +1,5 @@
-from avtomat_aws.services.ec2 import create_snapshots
 from avtomat_aws.helpers.cli.set_output import set_output
+from avtomat_aws.services.ec2 import create_snapshots
 
 ACTION_DESCRIPTION = "Create EBS snapshots from volumes."
 

@@ -1,5 +1,5 @@
-from avtomat_aws.services.ec2 import discover_default_ebs_encryption
 from avtomat_aws.helpers.cli.set_output import set_output
+from avtomat_aws.services.ec2 import discover_default_ebs_encryption
 
 ACTION_DESCRIPTION = "Discover default EBS encryption."
 

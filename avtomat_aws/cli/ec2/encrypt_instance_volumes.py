@@ -1,5 +1,5 @@
-from avtomat_aws.services.ec2 import encrypt_instance_volumes
 from avtomat_aws.helpers.cli.set_output import set_output
+from avtomat_aws.services.ec2 import encrypt_instance_volumes
 
 ACTION_DESCRIPTION = "Encrypt all EBS volumes attached to an instance."
 

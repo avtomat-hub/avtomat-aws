@@ -1,5 +1,5 @@
-from avtomat_aws.services.backup import create_backups
 from avtomat_aws.helpers.cli.set_output import set_output
+from avtomat_aws.services.backup import create_backups
 
 ACTION_DESCRIPTION = "Start an on-demand backup job for the specified resources."
 

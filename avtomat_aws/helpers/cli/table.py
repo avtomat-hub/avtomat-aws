@@ -8,24 +8,34 @@ def preprocess_data(data):
         data = [data]
 
 
-
-
 def table_from_list_dict_data(data):
     """Print a table from a list of dictionaries."""
 
-    headers = sorted(set(key for item in data for key in item.keys()))  # Sort headers for consistent ordering
-    column_widths = {header: max(len(header), max(len(str(item.get(header, ""))) for item in data)) for header in headers}
+    headers = sorted(
+        set(key for item in data for key in item.keys())
+    )  # Sort headers for consistent ordering
+    column_widths = {
+        header: max(len(header), max(len(str(item.get(header, ""))) for item in data))
+        for header in headers
+    }
 
     # Print table header
-    header_row = "+" + "+".join(["-" * (column_widths[header] + 2) for header in headers]) + "+"
+    header_row = (
+        "+" + "+".join(["-" * (column_widths[header] + 2) for header in headers]) + "+"
+    )
     print(header_row)
-    header_content = "|".join([" " + header.ljust(column_widths[header]) + " " for header in headers])
+    header_content = "|".join(
+        [" " + header.ljust(column_widths[header]) + " " for header in headers]
+    )
     print(f"|{header_content}|")
-    print(header_row.replace('-', '-'))
+    print(header_row.replace("-", "-"))
 
     # Print each row of data without dividers between rows
     for item in data:
-        row_data = [" " + str(item.get(header, "")).ljust(column_widths[header]) + " " for header in headers]
+        row_data = [
+            " " + str(item.get(header, "")).ljust(column_widths[header]) + " "
+            for header in headers
+        ]
         print(f"|{'|'.join(row_data)}|")
 
 
@@ -39,7 +49,7 @@ def table_from_list_data(data):
     header_row = f"+{'-' * (column_width + 2)}+"
     print(header_row)
     print(f"| {header.center(column_width)} |")
-    print(header_row.replace('-', '-'))
+    print(header_row.replace("-", "-"))
 
     # Print each row without dividers between rows
     for item in data:

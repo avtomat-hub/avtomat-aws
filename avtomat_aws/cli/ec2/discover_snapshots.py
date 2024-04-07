@@ -1,5 +1,5 @@
-from avtomat_aws.services.ec2 import discover_snapshots
 from avtomat_aws.helpers.cli.set_output import set_output
+from avtomat_aws.services.ec2 import discover_snapshots
 
 ACTION_DESCRIPTION = "Discover snapshots of EBS volumes."
 

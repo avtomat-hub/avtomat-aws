@@ -1,5 +1,5 @@
-from avtomat_aws.services.ec2 import modify_tags
 from avtomat_aws.helpers.cli.set_output import set_output
+from avtomat_aws.services.ec2 import modify_tags
 
 ACTION_DESCRIPTION = "Modify EC2 resource tags."
 

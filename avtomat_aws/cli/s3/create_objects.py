@@ -1,5 +1,5 @@
-from avtomat_aws.services.s3 import create_objects
 from avtomat_aws.helpers.cli.set_output import set_output
+from avtomat_aws.services.s3 import create_objects
 
 ACTION_DESCRIPTION = "Create objects in an S3 bucket."
 

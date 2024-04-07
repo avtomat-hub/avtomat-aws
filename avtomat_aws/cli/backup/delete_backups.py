@@ -1,5 +1,5 @@
-from avtomat_aws.services.backup import delete_backups
 from avtomat_aws.helpers.cli.set_output import set_output
+from avtomat_aws.services.backup import delete_backups
 
 ACTION_DESCRIPTION = "Delete backup recovery points."
 

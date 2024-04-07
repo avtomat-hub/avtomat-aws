@@ -1,5 +1,5 @@
-from avtomat_aws.services.general import get_date
 from avtomat_aws.helpers.cli.set_output import set_output
+from avtomat_aws.services.general import get_date
 
 ACTION_DESCRIPTION = "Return a date in the requested format."
 

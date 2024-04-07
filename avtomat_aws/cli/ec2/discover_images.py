@@ -1,5 +1,5 @@
-from avtomat_aws.services.ec2 import discover_images
 from avtomat_aws.helpers.cli.set_output import set_output
+from avtomat_aws.services.ec2 import discover_images
 
 ACTION_DESCRIPTION = "Discover AWS images (AMI)."
 

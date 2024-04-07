@@ -1,5 +1,5 @@
-from avtomat_aws.services.iam import discover_unused_access_keys
 from avtomat_aws.helpers.cli.set_output import set_output
+from avtomat_aws.services.iam import discover_unused_access_keys
 
 ACTION_DESCRIPTION = "Discover IAM access keys not used for over a number of days."
 

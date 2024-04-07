@@ -1,5 +1,5 @@
-from avtomat_aws.services.ec2 import discover_tags
 from avtomat_aws.helpers.cli.set_output import set_output
+from avtomat_aws.services.ec2 import discover_tags
 
 ACTION_DESCRIPTION = "Find existing or missing tags on EC2 resources."
 

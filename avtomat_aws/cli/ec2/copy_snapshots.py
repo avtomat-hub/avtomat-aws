@@ -1,5 +1,5 @@
-from avtomat_aws.services.ec2 import copy_snapshots
 from avtomat_aws.helpers.cli.set_output import set_output
+from avtomat_aws.services.ec2 import copy_snapshots
 
 ACTION_DESCRIPTION = "Move EC2 snapshots between regions or accounts."
 
