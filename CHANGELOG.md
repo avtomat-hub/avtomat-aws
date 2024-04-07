@@ -1,3 +1,9 @@
+## 0.1.2 (2024-04-07)
+
+### Fix
+
+- **cli**: Add action descriptions to the parser
+
 ## 0.1.1 (2024-04-06)
 
 ### Fix
