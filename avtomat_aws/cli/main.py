@@ -67,7 +67,12 @@ def set_parser(service, action):
     """Dynamically set the parser for the given service and action."""
 
     module = load_module(service, action)
-    parser = argparse.ArgumentParser(prog=f"aaws {service} {action}", add_help=False)
+    action_description = getattr(
+        module, "ACTION_DESCRIPTION", "No description available"
+    )
+    parser = argparse.ArgumentParser(
+        prog=f"aaws {service} {action}", add_help=False, description=action_description
+    )
 
     # Global arguments
     parser.add_argument(
