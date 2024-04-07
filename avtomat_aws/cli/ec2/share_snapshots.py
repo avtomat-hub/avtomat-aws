@@ -1,3 +1,4 @@
+from avtomat_aws.helpers.cli.set_output import set_output
 from avtomat_aws.services.ec2 import share_snapshots
 
 ACTION_DESCRIPTION = "Share EC2 snapshots with other accounts."
@@ -26,8 +27,7 @@ def cli(args):
 
     try:
         result = share_snapshots(**inputs)
-        for item in result:
-            print(item)
+        set_output(result, inputs)
     except Exception as e:
         print(f"Action failed - {e}")
         exit(1)

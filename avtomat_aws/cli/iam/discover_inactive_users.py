@@ -1,3 +1,4 @@
+from avtomat_aws.helpers.cli.set_output import set_output
 from avtomat_aws.services.iam import discover_inactive_users
 
 ACTION_DESCRIPTION = "Discover IAM users who haven't used the console and any access keys over a certain period."
@@ -23,8 +24,7 @@ def cli(args):
 
     try:
         result = discover_inactive_users(**inputs)
-        for item in result:
-            print(item)
+        set_output(result, inputs)
     except Exception as e:
         print(f"Action failed - {e}")
         exit(1)

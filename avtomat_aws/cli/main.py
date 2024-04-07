@@ -86,6 +86,9 @@ def set_parser(service, action):
     parser.add_argument(
         "--silent", action="store_true", help="Decrease log verbosity.", required=False
     )
+    parser.add_argument(
+        "--output", help="Output format.", choices=["table"], required=False
+    )
 
     # Use the imported module's function to add its arguments to the parser
     if hasattr(module, "add_cli_arguments"):

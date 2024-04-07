@@ -1,3 +1,4 @@
+from avtomat_aws.helpers.cli.set_output import set_output
 from avtomat_aws.services.cloudtrail import discover_resource_events
 
 ACTION_DESCRIPTION = "Discover events for a specific resource."
@@ -36,8 +37,7 @@ def cli(args):
 
     try:
         result = discover_resource_events(**inputs)
-        for item in result:
-            print(item)
+        set_output(result, inputs)
     except Exception as e:
         print(f"Action failed - {e}")
         exit(1)

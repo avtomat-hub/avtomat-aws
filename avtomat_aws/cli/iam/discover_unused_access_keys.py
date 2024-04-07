@@ -1,3 +1,4 @@
+from avtomat_aws.helpers.cli.set_output import set_output
 from avtomat_aws.services.iam import discover_unused_access_keys
 
 ACTION_DESCRIPTION = "Discover IAM access keys not used for over a number of days."
@@ -23,8 +24,7 @@ def cli(args):
 
     try:
         result = discover_unused_access_keys(**inputs)
-        for item in result:
-            print(item)
+        set_output(result, inputs)
     except Exception as e:
         print(f"Action failed - {e}")
         exit(1)

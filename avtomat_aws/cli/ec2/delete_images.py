@@ -1,3 +1,4 @@
+from avtomat_aws.helpers.cli.set_output import set_output
 from avtomat_aws.services.ec2 import delete_images
 
 ACTION_DESCRIPTION = "Delete EC2 images (AMI)."
@@ -29,8 +30,7 @@ def cli(args):
 
     try:
         result = delete_images(**inputs)
-        for item in result:
-            print(item)
+        set_output(result, inputs)
     except Exception as e:
         print(f"Action failed - {e}")
         exit(1)

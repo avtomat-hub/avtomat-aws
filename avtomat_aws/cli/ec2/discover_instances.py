@@ -1,3 +1,4 @@
+from avtomat_aws.helpers.cli.set_output import set_output
 from avtomat_aws.services.ec2 import discover_instances
 
 ACTION_DESCRIPTION = "Discover instances."
@@ -48,8 +49,7 @@ def cli(args):
 
     try:
         result = discover_instances(**inputs)
-        for item in result:
-            print(item)
+        set_output(result, inputs)
     except Exception as e:
         print(f"Action failed - {e}")
         exit(1)

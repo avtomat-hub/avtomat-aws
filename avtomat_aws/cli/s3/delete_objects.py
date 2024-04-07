@@ -1,3 +1,4 @@
+from avtomat_aws.helpers.cli.set_output import set_output
 from avtomat_aws.services.s3 import delete_objects
 
 ACTION_DESCRIPTION = "Delete objects from an S3 bucket."
@@ -27,8 +28,7 @@ def cli(args):
 
     try:
         result = delete_objects(**inputs)
-        for item in result:
-            print(item)
+        set_output(result, inputs)
     except Exception as e:
         print(f"Action failed - {e}")
         exit(1)

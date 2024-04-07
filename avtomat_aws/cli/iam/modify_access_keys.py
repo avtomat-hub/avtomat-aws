@@ -1,3 +1,4 @@
+from avtomat_aws.helpers.cli.set_output import set_output
 from avtomat_aws.services.iam import modify_access_keys
 
 ACTION_DESCRIPTION = "Enable or disable an IAM access key."
@@ -40,8 +41,7 @@ def cli(args):
 
     try:
         result = modify_access_keys(**inputs)
-        for item in result:
-            print(item)
+        set_output(result, inputs)
     except Exception as e:
         print(f"Action failed - {e}")
         exit(1)

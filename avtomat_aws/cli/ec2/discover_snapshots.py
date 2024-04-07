@@ -1,3 +1,4 @@
+from avtomat_aws.helpers.cli.set_output import set_output
 from avtomat_aws.services.ec2 import discover_snapshots
 
 ACTION_DESCRIPTION = "Discover snapshots of EBS volumes."
@@ -49,8 +50,7 @@ def cli(args):
 
     try:
         result = discover_snapshots(**inputs)
-        for item in result:
-            print(item)
+        set_output(result, inputs)
     except Exception as e:
         print(f"Action failed - {e}")
         exit(1)

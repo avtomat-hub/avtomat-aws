@@ -1,3 +1,4 @@
+from avtomat_aws.helpers.cli.set_output import set_output
 from avtomat_aws.services.general import get_date
 
 ACTION_DESCRIPTION = "Return a date in the requested format."
@@ -30,7 +31,7 @@ def cli(args):
 
     try:
         result = get_date(**inputs)
-        print(result)
+        set_output(result, inputs)
     except Exception as e:
         print(f"Action failed - {e}")
         exit(1)
