@@ -6,7 +6,7 @@ ACTION_DESCRIPTION = "Delete backup recovery points."
 def add_cli_arguments(parser):
     """Argument parsing"""
 
-    required = parser.add_argument_group("required arguments")
+    required = parser.add_argument_group("required")
 
     required.add_argument(
         "--backup_vault_name",

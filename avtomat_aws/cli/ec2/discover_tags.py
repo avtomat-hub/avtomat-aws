@@ -6,7 +6,7 @@ ACTION_DESCRIPTION = "Find existing or missing tags on EC2 resources."
 def add_cli_arguments(parser):
     """Argument parsing"""
 
-    required = parser.add_argument_group("required arguments")
+    required = parser.add_argument_group("required")
 
     required.add_argument(
         "--resource_types",

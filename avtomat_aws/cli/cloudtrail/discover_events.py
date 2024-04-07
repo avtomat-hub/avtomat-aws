@@ -6,7 +6,7 @@ ACTION_DESCRIPTION = "Discover events by name."
 def add_cli_arguments(parser):
     """Argument parsing"""
 
-    required = parser.add_argument_group("required arguments")
+    required = parser.add_argument_group("required")
 
     required.add_argument("--event", help="Search for this event.", required=True)
     parser.add_argument(

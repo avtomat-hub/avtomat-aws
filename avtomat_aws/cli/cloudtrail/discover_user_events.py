@@ -6,7 +6,7 @@ ACTION_DESCRIPTION = "Discover events created by specific user."
 def add_cli_arguments(parser):
     """Argument parsing"""
 
-    required = parser.add_argument_group("required arguments")
+    required = parser.add_argument_group("required")
 
     required.add_argument(
         "--user", help="Search events originating from this user.", required=True

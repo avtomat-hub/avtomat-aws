@@ -6,7 +6,7 @@ ACTION_DESCRIPTION = "Create objects in an S3 bucket."
 def add_cli_arguments(parser):
     """Argument parsing"""
 
-    required = parser.add_argument_group("required arguments")
+    required = parser.add_argument_group("required")
 
     required.add_argument(
         "--bucket", help="Name of the S3 bucket to create objects in.", required=True

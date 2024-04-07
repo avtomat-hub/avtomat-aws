@@ -1,4 +1,4 @@
-services = {
+SERVICES = {
     "backup": ["create_backups", "delete_backups"],
     "cloudtrail": [
         "discover_user_events",
