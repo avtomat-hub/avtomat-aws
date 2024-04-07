@@ -1,4 +1,5 @@
 from avtomat_aws.services.backup import create_backups
+from avtomat_aws.helpers.cli.set_output import set_output
 
 ACTION_DESCRIPTION = "Start an on-demand backup job for the specified resources."
 
@@ -49,8 +50,7 @@ def cli(args):
 
     try:
         result = create_backups(**inputs)
-        for item in result:
-            print(item)
+        set_output(result, inputs)
     except Exception as e:
         print(f"Action failed - {e}")
         exit(1)

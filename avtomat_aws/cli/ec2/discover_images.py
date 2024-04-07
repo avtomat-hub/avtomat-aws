@@ -1,4 +1,5 @@
 from avtomat_aws.services.ec2 import discover_images
+from avtomat_aws.helpers.cli.set_output import set_output
 
 ACTION_DESCRIPTION = "Discover AWS images (AMI)."
 
@@ -43,8 +44,7 @@ def cli(args):
 
     try:
         result = discover_images(**inputs)
-        for item in result:
-            print(item)
+        set_output(result, inputs)
     except Exception as e:
         print(f"Action failed - {e}")
         exit(1)

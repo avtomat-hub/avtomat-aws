@@ -1,4 +1,5 @@
 from avtomat_aws.services.ec2 import encrypt_instance_volumes
+from avtomat_aws.helpers.cli.set_output import set_output
 
 ACTION_DESCRIPTION = "Encrypt all EBS volumes attached to an instance."
 
@@ -29,7 +30,7 @@ def cli(args):
 
     try:
         result = encrypt_instance_volumes(**inputs)
-        print(result)
+        set_output(result, inputs)
     except Exception as e:
         print(f"Action failed - {e}")
         exit(1)

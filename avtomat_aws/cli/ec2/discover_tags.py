@@ -1,4 +1,5 @@
 from avtomat_aws.services.ec2 import discover_tags
+from avtomat_aws.helpers.cli.set_output import set_output
 
 ACTION_DESCRIPTION = "Find existing or missing tags on EC2 resources."
 
@@ -41,8 +42,7 @@ def cli(args):
 
     try:
         result = discover_tags(**inputs)
-        for item in result:
-            print(item)
+        set_output(result, inputs)
     except Exception as e:
         print(f"Action failed - {e}")
         exit(1)

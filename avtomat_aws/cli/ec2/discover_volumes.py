@@ -1,4 +1,5 @@
 from avtomat_aws.services.ec2 import discover_volumes
+from avtomat_aws.helpers.cli.set_output import set_output
 
 ACTION_DESCRIPTION = "Discover EBS volumes."
 
@@ -51,8 +52,7 @@ def cli(args):
 
     try:
         result = discover_volumes(**inputs)
-        for item in result:
-            print(item)
+        set_output(result, inputs)
     except Exception as e:
         print(f"Action failed - {e}")
         exit(1)
