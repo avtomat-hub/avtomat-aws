@@ -1,3 +1,10 @@
+## 0.1.4 (2024-04-08)
+
+### Fix
+
+- **date-handling**: Improve how discover_images and discover_snapshots handle dates
+- **validation-logic**: Fix cloudtrail validation logic to correctly evaluate dates
+
 ## 0.1.3 (2024-04-08)
 
 ### Fix
