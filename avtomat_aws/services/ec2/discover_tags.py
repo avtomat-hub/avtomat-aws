@@ -3,6 +3,7 @@ import logging
 from avtomat_aws.decorators.authenticate import authenticate
 from avtomat_aws.decorators.set_logger import set_logger
 from avtomat_aws.decorators.validate import validate
+from avtomat_aws.helpers.format_tags import format_tags
 from avtomat_aws.helpers.set_session_objects import set_session_objects
 
 logger = logging.getLogger(__name__)
@@ -50,15 +51,6 @@ def discover_tags(**kwargs):
     resource_types = kwargs.pop("resource_types")
     tags = kwargs.pop("tags")
 
-    # Convert 'tags' from ['Key=Value', 'Key', ...] format to a list of tuples [(Key, Value), (Key, None), ...]
-    tag_tuples = []
-    for tag in tags:
-        if "=" in tag:
-            key, value = tag.split("=", 1)
-            tag_tuples.append((key, value))
-        else:
-            tag_tuples.append((tag, None))
-
     session_objects = set_session_objects(
         kwargs["session"], resources=["ec2"], region=kwargs["region"]
     )
@@ -68,40 +60,41 @@ def discover_tags(**kwargs):
     elif kwargs.get("missing"):
         logger.info(f"Discovering resources without tags: {tags}")
 
+    formatted_tags = format_tags(tags)
     resources = []
     if "image" in resource_types:
         response = session_objects["ec2_resource"].images.filter(Owners=["self"])
-        resources.extend(search_collections(response, tag_tuples, **kwargs))
+        resources.extend(search_collections(response, formatted_tags, **kwargs))
     if "instance" in resource_types:
         response = session_objects["ec2_resource"].instances.all()
-        resources.extend(search_collections(response, tag_tuples, **kwargs))
+        resources.extend(search_collections(response, formatted_tags, **kwargs))
     if "internet_gateway" in resource_types:
         response = session_objects["ec2_resource"].internet_gateways.all()
-        resources.extend(search_collections(response, tag_tuples, **kwargs))
+        resources.extend(search_collections(response, formatted_tags, **kwargs))
     if "key_pair" in resource_types:
         response = session_objects["ec2_resource"].key_pairs.all()
-        resources.extend(search_collections(response, tag_tuples, **kwargs))
+        resources.extend(search_collections(response, formatted_tags, **kwargs))
     if "network_acl" in resource_types:
         response = session_objects["ec2_resource"].network_acls.all()
-        resources.extend(search_collections(response, tag_tuples, **kwargs))
+        resources.extend(search_collections(response, formatted_tags, **kwargs))
     if "route_table" in resource_types:
         response = session_objects["ec2_resource"].route_tables.all()
-        resources.extend(search_collections(response, tag_tuples, **kwargs))
+        resources.extend(search_collections(response, formatted_tags, **kwargs))
     if "security_group" in resource_types:
         response = session_objects["ec2_resource"].security_groups.all()
-        resources.extend(search_collections(response, tag_tuples, **kwargs))
+        resources.extend(search_collections(response, formatted_tags, **kwargs))
     if "snapshot" in resource_types:
         response = session_objects["ec2_resource"].snapshots.filter(OwnerIds=["self"])
-        resources.extend(search_collections(response, tag_tuples, **kwargs))
+        resources.extend(search_collections(response, formatted_tags, **kwargs))
     if "subnet" in resource_types:
         response = session_objects["ec2_resource"].subnets.all()
-        resources.extend(search_collections(response, tag_tuples, **kwargs))
+        resources.extend(search_collections(response, formatted_tags, **kwargs))
     if "volume" in resource_types:
         response = session_objects["ec2_resource"].volumes.all()
-        resources.extend(search_collections(response, tag_tuples, **kwargs))
+        resources.extend(search_collections(response, formatted_tags, **kwargs))
     if "vpc" in resource_types:
         response = session_objects["ec2_resource"].vpcs.all()
-        resources.extend(search_collections(response, tag_tuples, **kwargs))
+        resources.extend(search_collections(response, formatted_tags, **kwargs))
 
     logger.info(f"{len(resources)} resources found")
     logger.debug(resources)
@@ -126,16 +119,23 @@ def search_collections(response, tags, **kwargs):
         if missing:
             match = any(
                 (
-                    key not in resource_tags
-                    or (value is not None and resource_tags[key] != value)
+                    tag["Key"] not in resource_tags
+                    or (
+                        tag.get("Value") is not None
+                        and resource_tags[tag["Key"]] != tag["Value"]
+                    )
                 )
-                for key, value in tags
+                for tag in tags
             )
 
         elif existing:
             match = all(
-                key in resource_tags and (value is None or resource_tags[key] == value)
-                for key, value in tags
+                tag["Key"] in resource_tags
+                and (
+                    tag.get("Value") is None
+                    or resource_tags[tag["Key"]] == tag["Value"]
+                )
+                for tag in tags
             )
 
         if match:
