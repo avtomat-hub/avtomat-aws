@@ -1,3 +1,9 @@
+## 0.1.3 (2024-04-08)
+
+### Fix
+
+- **cli**: Add option for tabulated output
+
 ## 0.1.2 (2024-04-07)
 
 ### Fix
