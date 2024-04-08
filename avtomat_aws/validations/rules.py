@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta, timezone
+from datetime import datetime, timedelta
 
 
 def required_rule(kwargs, params):
@@ -45,7 +45,7 @@ def at_most_one_rule(kwargs, params):
     if len(params) < 2:
         raise ValueError("Rule 'at_most_one' requires at least two parameters")
 
-    params_defined = sum(kwargs.get(param) not in (None, []) for param in params)
+    params_defined = sum(kwargs.get(param) not in (None, [], False) for param in params)
     if params_defined > 1:
         raise ValueError(
             f"The following parameters cannot be used together, select only one: {params}"
@@ -72,9 +72,9 @@ def date_yymmdd_rule(kwargs, params):
     """Validates that date parameters are in the correct format (YYYY/MM/DD)."""
 
     for param in params:
-        if kwargs.get(param):
+        if kwargs.get(param) and type(kwargs[param]) is str:
             try:
-                kwargs[param] = datetime.strptime(kwargs[param], "%Y/%m/%d")
+                datetime.strptime(kwargs[param], "%Y/%m/%d")
             except ValueError:
                 raise ValueError(
                     f"'{param}' '{kwargs[param]}' does not match the format YYYY/MM/DD"
@@ -85,10 +85,14 @@ def cloudtrail_rule(kwargs, params):
     """Validates that a date is not in the future or not more than 90 days in the past."""
 
     for param in params:
-        if kwargs.get(param):
-            if kwargs[param] < datetime.now(timezone.utc) - timedelta(days=90):
-                raise ValueError(
-                    f"'{param}' '{kwargs[param]}' cannot be more than 90 days in the past"
-                )
-            if kwargs[param] > datetime.now(timezone.utc):
-                raise ValueError(f"'{param}' '{kwargs[param]}' cannot be in the future")
+        if type(kwargs[param]) is str:
+            param_date = datetime.strptime(kwargs[param], "%Y/%m/%d")
+        else:
+            param_date = kwargs[param]
+
+        if param_date < datetime.now() - timedelta(days=90):
+            raise ValueError(
+                f"'{param}' '{kwargs[param]}' cannot be more than 90 days in the past"
+            )
+        if param_date > datetime.now():
+            raise ValueError(f"'{param}' '{kwargs[param]}' cannot be in the future")
