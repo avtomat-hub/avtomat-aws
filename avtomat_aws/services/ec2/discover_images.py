@@ -27,12 +27,12 @@ RULES = [{"date_yymmdd": ["created_before", "created_after"]}]
 def discover_images(**kwargs):
     """Discover images based on provided criteria"""
 
-    if kwargs.get("created_before"):
+    if kwargs.get("created_after") and type(kwargs["created_after"]) is str:
+        kwargs["created_after"] = datetime.strptime(kwargs["created_after"], "%Y/%m/%d")
+    if kwargs.get("created_before") and type(kwargs["created_before"]) is str:
         kwargs["created_before"] = datetime.strptime(
             kwargs["created_before"], "%Y/%m/%d"
         )
-    if kwargs.get("created_after"):
-        kwargs["created_after"] = datetime.strptime(kwargs["created_after"], "%Y/%m/%d")
 
     logger.info("Discovering images")
 

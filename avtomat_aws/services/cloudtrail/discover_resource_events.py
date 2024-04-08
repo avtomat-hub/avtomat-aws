@@ -36,7 +36,8 @@ def discover_resource_events(**kwargs):
         kwargs["created_after"] = datetime.strptime(kwargs["created_after"], "%Y/%m/%d")
     if kwargs.get("created_before") and type(kwargs["created_before"]) is str:
         kwargs["created_before"] = datetime.strptime(
-            kwargs["created_before"], "%Y/%m/%d")
+            kwargs["created_before"], "%Y/%m/%d"
+        )
 
     logger.info(f"Discovering CloudTrail events for resource '{resource_id}'")
 
