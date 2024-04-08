@@ -10,8 +10,8 @@ logger = logging.getLogger(__name__)
 
 DEFAULTS = {
     "events": [],
-    "created_after": (datetime.now() - timedelta(days=90)).strftime("%Y/%m/%d"),
-    "created_before": (datetime.now()).strftime("%Y/%m/%d"),
+    "created_after": datetime.now() - timedelta(days=90),
+    "created_before": datetime.now(),
     "region": None,
     "debug": False,
     "silent": False,
@@ -32,12 +32,11 @@ def discover_resource_events(**kwargs):
     # Required parameters
     resource_id = kwargs.pop("resource_id")
 
-    if kwargs.get("created_after"):
+    if kwargs.get("created_after") and type(kwargs["created_after"]) is str:
         kwargs["created_after"] = datetime.strptime(kwargs["created_after"], "%Y/%m/%d")
-    if kwargs.get("created_before"):
+    if kwargs.get("created_before") and type(kwargs["created_before"]) is str:
         kwargs["created_before"] = datetime.strptime(
-            kwargs["created_before"], "%Y/%m/%d"
-        )
+            kwargs["created_before"], "%Y/%m/%d")
 
     logger.info(f"Discovering CloudTrail events for resource '{resource_id}'")
 

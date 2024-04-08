@@ -9,8 +9,8 @@ from avtomat_aws.helpers.set_session_objects import set_session_objects
 logger = logging.getLogger(__name__)
 
 DEFAULTS = {
-    "created_after": (datetime.now() - timedelta(days=90)).strftime("%Y/%m/%d"),
-    "created_before": (datetime.now()).strftime("%Y/%m/%d"),
+    "created_after": datetime.now() - timedelta(days=90),
+    "created_before": datetime.now(),
     "region": None,
     "debug": False,
     "silent": False,
@@ -31,12 +31,11 @@ def discover_events(**kwargs):
     # Required parameters
     event = kwargs.pop("event")
 
-    if kwargs.get("created_after"):
+    if kwargs.get("created_after") and type(kwargs["created_after"]) is str:
         kwargs["created_after"] = datetime.strptime(kwargs["created_after"], "%Y/%m/%d")
-    if kwargs.get("created_before"):
+    if kwargs.get("created_before") and type(kwargs["created_before"]) is str:
         kwargs["created_before"] = datetime.strptime(
-            kwargs["created_before"], "%Y/%m/%d"
-        )
+            kwargs["created_before"], "%Y/%m/%d")
 
     logger.info(f"Discovering CloudTrail events for '{event}'")
 
