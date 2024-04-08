@@ -3,6 +3,7 @@ import logging
 from avtomat_aws.decorators.authenticate import authenticate
 from avtomat_aws.decorators.set_logger import set_logger
 from avtomat_aws.decorators.validate import validate
+from avtomat_aws.helpers.format_tags import format_tags
 from avtomat_aws.helpers.set_session_objects import set_session_objects
 
 logger = logging.getLogger(__name__)
@@ -27,25 +28,6 @@ RULES = [
 def modify_tags(**kwargs):
     """Create or delete tags for EC2 resources"""
 
-    if not kwargs.get("delete"):
-        for tag in kwargs["tags"]:
-            if "=" not in tag:
-                raise ValueError(
-                    f"Tag '{tag}' not in Key=Value format."
-                )  # Needs a validation rule
-
-    # Change tags into the correct format
-    # Needs better handling
-    formatted_tags = []
-    for tag in kwargs["tags"]:
-        if "=" in tag:
-            key, value = tag.split("=", 1)
-            formatted_tags.append({"Key": key, "Value": value})
-        else:
-            key = tag
-            formatted_tags.append({"Key": key})
-    kwargs["tags"] = formatted_tags
-
     # Required parameters
     resource_ids = kwargs.pop("resource_ids")
     tags = kwargs.pop("tags")
@@ -59,14 +41,20 @@ def modify_tags(**kwargs):
     )
 
     if kwargs.get("create"):
+        formatted_tags = format_tags(tags, creation=True)
         logger.info(f"Creating tags for resources")
-    elif kwargs.get("delete"):
+    else:
+        formatted_tags = format_tags(tags)
         logger.info(f"Deleting tags for resources")
 
     if kwargs.get("dynamic_tags"):
-        failed_resources = dynamic_tags(tags, resource_ids, session_objects, **kwargs)
+        failed_resources = dynamic_tags(
+            formatted_tags, resource_ids, session_objects, **kwargs
+        )
     else:
-        failed_resources = static_tags(tags, resource_ids, session_objects, **kwargs)
+        failed_resources = static_tags(
+            formatted_tags, resource_ids, session_objects, **kwargs
+        )
 
     if failed_resources:
         logger.info(f"{len(failed_resources)} resources failed tag modification")

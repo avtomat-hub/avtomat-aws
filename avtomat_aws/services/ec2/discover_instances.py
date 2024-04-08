@@ -3,6 +3,7 @@ import logging
 from avtomat_aws.decorators.authenticate import authenticate
 from avtomat_aws.decorators.set_logger import set_logger
 from avtomat_aws.decorators.validate import validate
+from avtomat_aws.helpers.format_tags import format_tags
 from avtomat_aws.helpers.set_session_objects import set_session_objects
 
 logger = logging.getLogger(__name__)
@@ -78,14 +79,12 @@ def build_filters(**kwargs):
 
     if tags:
         logger.debug(f"Filtering for tags: {tags}")
-        for tag in tags:
-            parsed_tag = parse_tag(tag)
-            if parsed_tag[1]:
-                filters.append(
-                    {"Name": f"tag:{parsed_tag[0]}", "Values": [parsed_tag[1]]}
-                )
+        formatted_tags = format_tags(tags)
+        for tag in formatted_tags:
+            if tag.get("Key") and tag.get("Value"):
+                filters.append({"Name": f"tag:{tag['Key']}", "Values": [tag["Value"]]})
             else:
-                filters.append({"Name": "tag-key", "Values": [parsed_tag[0]]})
+                filters.append({"Name": "tag-key", "Values": [tag["Key"]]})
 
     if public:
         logger.debug("Filtering for public instances")
@@ -118,10 +117,3 @@ def search_instances(filters, session_objects, **kwargs):
         instances = [id for id in instances if id not in windows_instances]
 
     return instances
-
-
-def parse_tag(tag):
-    if "=" in tag:
-        return tag.split("=", 1)
-    else:
-        return tag, None
