@@ -1,3 +1,15 @@
+## 0.2.0 (2024-04-09)
+
+### Feat
+
+- **ec2.delete_instances**: Add new action
+- **ec2.create_images**: Add new action
+
+### Fix
+
+- **ec2.delete_instances**: Uncomment try/except for CLI interface function
+- **helpers**: Add format_tags helper for actions that accept tags as parameter
+
 ## 0.1.4 (2024-04-08)
 
 ### Fix
