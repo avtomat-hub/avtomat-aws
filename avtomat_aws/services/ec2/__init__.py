@@ -2,6 +2,7 @@ from .copy_snapshots import copy_snapshots
 from .create_images import create_images
 from .create_snapshots import create_snapshots
 from .delete_images import delete_images
+from .delete_instances import delete_instances
 from .delete_security_groups import delete_security_groups
 from .delete_snapshots import delete_snapshots
 from .delete_volumes import delete_volumes

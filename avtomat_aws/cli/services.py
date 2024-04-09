@@ -10,6 +10,7 @@ SERVICES = {
         "create_images",
         "create_snapshots",
         "delete_images",
+        "delete_instances",
         "delete_security_groups",
         "delete_snapshots",
         "delete_volumes",
