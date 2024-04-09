@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "avtomat-aws"
-version = "0.1.4"
+version = "0.2.0"
 description = "A collection of reusable Amazon Web Services actions, bringing speed and certainty to cloud operations."
 authors = ["Dimitar Atanasov <dimitar@avtomat.io>"]
 license = "GPL-2.0-only"
