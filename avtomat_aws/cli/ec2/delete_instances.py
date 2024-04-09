@@ -34,9 +34,9 @@ def cli(args):
 
     inputs = vars(args)
 
-    # try:
-    result = delete_instances(**inputs)
-    set_output(result, inputs)
-    # except Exception as e:
-    #    print(f"Action failed - {e}")
-    #    exit(1)
+    try:
+        result = delete_instances(**inputs)
+        set_output(result, inputs)
+    except Exception as e:
+        print(f"Action failed - {e}")
+        exit(1)
