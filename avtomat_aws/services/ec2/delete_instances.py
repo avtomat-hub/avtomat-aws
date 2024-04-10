@@ -81,6 +81,9 @@ def delete_instances(**kwargs):
             associated_resources["Snapshots"] += discover_snapshots(
                 associated_resources["Volumes"], session_objects["ec2_resource"]
             )  # We append instead of assign to avoid overwriting snapshots associated with images
+            associated_resources["Snapshots"] = list(
+                set(associated_resources["Snapshots"])
+            )  # Deduplicate
 
     if kwargs.get("disable_protections"):
         logger.info("Disabling API protections")
@@ -289,7 +292,12 @@ def discover_images(instances, ec2_resource):
         images.append(image)
     snapshots = []
     for image in images:
-        snapshots += discover_image_snapshots(image, ec2_resource)
+        if image.state == "available":
+            snapshots += discover_image_snapshots(image, ec2_resource)
+        else:
+            logger.warning(
+                f"{image.id} - not fully available, will skip snapshot deletion"
+            )
     return images, snapshots
 
 
@@ -311,8 +319,8 @@ def discover_image_snapshots(image, ec2_resource):
         try:
             snapshot = ec2_resource.Snapshot(snapshot_id["Ebs"]["SnapshotId"])
             snapshots.append(snapshot)
-        except ClientError as e:
-            logger.error(f"{snapshot_id} - failed to discover snapshot - {e}")
+        except Exception as e:
+            logger.error(f"{image.image_id} - failed to discover snapshots - {e}")
             continue
     return snapshots
 
