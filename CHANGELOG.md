@@ -1,3 +1,12 @@
+## 0.2.1 (2024-04-10)
+
+### Fix
+
+- **ec2.delete_instances.discover_image_snapshots.exception**: Change image.image_id to image.id
+- **ec2.delete_instances.cli**: Revert the original cli interface
+- **ec2.delete_instances.discover_image_snapshots**: Skip snapshot retrieval for images not in 'available' state
+- **ec2.delete_instances**: Add 'disable_protections' parameter allowing disabling of termination and stop API protections before deletion
+
 ## 0.2.0 (2024-04-09)
 
 ### Feat
