@@ -14,6 +14,7 @@ logger = logging.getLogger(__name__)
 DEFAULTS = {
     "include": None,
     "final_image": False,
+    "disable_protections": False,
     "region": None,
     "debug": False,
     "silent": False,
@@ -65,6 +66,7 @@ def delete_instances(**kwargs):
     # Discover associated resources before deletion
     associated_resources = {"Volumes": [], "Images": [], "Snapshots": []}
     if kwargs.get("include"):
+        logger.info(f"Discovering associated resources: {kwargs.get('include')}")
         if "volume" in kwargs.get("include"):
             associated_resources["Volumes"] = discover_volumes(instances)
         if "image" in kwargs.get("include"):
@@ -80,11 +82,12 @@ def delete_instances(**kwargs):
                 associated_resources["Volumes"], session_objects["ec2_resource"]
             )  # We append instead of assign to avoid overwriting snapshots associated with images
 
-    logger.info(f"Deleting instances")
-    if kwargs.get("final_image"):
-        logger.info("Creating images before deletion")
+    if kwargs.get("disable_protections"):
+        logger.info("Disabling API protections")
+        disable_protections(instances)
 
     running_instances_to_stop = []
+    logger.info("Stopping any running instances")
     for instance in instances:  # First concurrently stop all running instances.
         if instance.state["Name"] == "running":
             logger.info(f"{instance.id} - running, stopping before deletion")
@@ -99,6 +102,7 @@ def delete_instances(**kwargs):
 
     images_to_wait = []
     if kwargs.get("final_image"):
+        logger.info("Creating images before deletion")
         for instance in instances[:]:  # Iterate over a shallow copy
             try:
                 # Generate random uuid as image names must be unique
@@ -145,6 +149,7 @@ def delete_instances(**kwargs):
     if not instances:
         return failed
 
+    logger.info(f"Deleting instances")
     for instance in instances[:]:  # Iterate over a shallow copy
         try:
             instance.terminate()
@@ -170,41 +175,46 @@ def delete_instances(**kwargs):
     if not instances:
         return failed
 
-    logger.info(f"{len(instances)} instances deleted")
-
-    if failed["Instances"]:
-        logger.warning(f"{len(failed['Instances'])} instances failed to delete")
-        logger.debug(failed["Instances"])
-
     time.sleep(
         5
     )  # Wait for a few seconds before attempting to delete associated resources
 
+    volumes_counter = 0
+    images_counter = 0
+    snapshots_counter = 0
     if kwargs.get("include"):
         logger.info(f"Deleting associated resources: {kwargs.get('include')}")
         if "volume" in kwargs.get("include"):
-            counter, volumes_failed = delete_volumes(associated_resources["Volumes"])
-            logger.info(f"{counter} volumes deleted")
-            if volumes_failed:
-                failed["Volumes"] = volumes_failed
-                logger.warning(f"{len(volumes_failed)} volumes failed to delete")
-                logger.debug(volumes_failed)
+            volumes_counter, failed["Volumes"] = delete_volumes(
+                associated_resources["Volumes"]
+            )
         if "image" in kwargs.get("include"):
-            counter, images_failed = delete_images(associated_resources["Images"])
-            logger.info(f"{counter} images deleted")
-            if images_failed:
-                failed["Images"] = images_failed
-                logger.warning(f"{len(images_failed)} images failed to delete")
-                logger.debug(images_failed)
+            images_counter, failed["Images"] = delete_images(
+                associated_resources["Images"]
+            )
         if "image" in kwargs.get("include") or "snapshot" in kwargs.get("include"):
-            counter, snapshots_failed = delete_snapshots(
+            snapshots_counter, failed["Snapshots"] = delete_snapshots(
                 associated_resources["Snapshots"]
             )
-            logger.info(f"{counter} snapshots deleted")
-            if snapshots_failed:
-                failed["Snapshots"] = snapshots_failed
-                logger.warning(f"{len(snapshots_failed)} snapshots failed to delete")
-                logger.debug(snapshots_failed)
+
+        # Provide a summary of deleted resources
+        logger.info(f"{len(instances)} instances deleted")
+        logger.info(f"{volumes_counter} volumes deleted")
+        logger.info(f"{images_counter} images deleted")
+        logger.info(f"{snapshots_counter} snapshots deleted")
+
+        if failed["Instances"]:
+            logger.warning(f"{len(failed['Instances'])} instances failed to delete")
+            logger.debug(failed["Instances"])
+        if failed["Volumes"]:
+            logger.warning(f"{len(failed['Volumes'])} volumes failed to delete")
+            logger.debug(failed["Volumes"])
+        if failed["Images"]:
+            logger.warning(f"{len(failed['Images'])} images failed to delete")
+            logger.debug(failed["Images"])
+        if failed["Snapshots"]:
+            logger.warning(f"{len(failed['Snapshots'])} snapshots failed to delete")
+            logger.debug(failed["Snapshots"])
 
     return failed
 
@@ -305,3 +315,14 @@ def discover_image_snapshots(image, ec2_resource):
             logger.error(f"{snapshot_id} - failed to discover snapshot - {e}")
             continue
     return snapshots
+
+
+def disable_protections(instances):
+    """Disable termination and stop protections for instances"""
+    for instance in instances:
+        try:
+            instance.modify_attribute(DisableApiTermination={"Value": False})
+            instance.modify_attribute(DisableApiStop={"Value": False})
+            logger.info(f"{instance.id} - api protections disabled")
+        except Exception as e:
+            logger.error(f"{instance.id} - failed to disable api protections - {e}")
