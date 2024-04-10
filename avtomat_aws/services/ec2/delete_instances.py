@@ -320,7 +320,7 @@ def discover_image_snapshots(image, ec2_resource):
             snapshot = ec2_resource.Snapshot(snapshot_id["Ebs"]["SnapshotId"])
             snapshots.append(snapshot)
         except Exception as e:
-            logger.error(f"{image.image_id} - failed to discover snapshots - {e}")
+            logger.error(f"{image.id} - failed to discover snapshots - {e}")
             continue
     return snapshots
 
