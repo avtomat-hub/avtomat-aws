@@ -15,7 +15,7 @@ RULES = []
 @set_logger()
 @authenticate()
 def discover_permissive_policies(**kwargs):
-    """Discover IAM policies with overly permissive permissions"""
+    """Discover overly permissive IAM policies"""
 
     session_objects = set_session_objects(
         kwargs["session"], resources=["iam"], region=kwargs["region"]
