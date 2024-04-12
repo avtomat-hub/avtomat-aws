@@ -1,3 +1,9 @@
+## 0.3.0 (2024-04-12)
+
+### Feat
+
+- **iam.discover_permissive_policies**: Add new actions
+
 ## 0.2.1 (2024-04-10)
 
 ### Fix
