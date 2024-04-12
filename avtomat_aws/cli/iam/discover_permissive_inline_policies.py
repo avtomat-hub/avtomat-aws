@@ -1,7 +1,7 @@
 from avtomat_aws.helpers.cli.set_output import set_output
 from avtomat_aws.services.iam import discover_permissive_inline_policies
 
-ACTION_DESCRIPTION = "Discover IAM inline policies with overly permissive permissions."
+ACTION_DESCRIPTION = "Discover overly permissive inline IAM policies."
 
 
 def add_cli_arguments(parser):
