@@ -1,17 +1,44 @@
+import os
+
 from avtomat_aws.services.sts import create_session
 
 ACTION_DESCRIPTION = "Create an authenticated session."
 
 
-def print_export_commands(session):
-    """Print credentials for CLI"""
-
+def print_environment_bash(session):
+    """Set environment variables in Bash"""
     credentials = session.get_credentials()
     current_credentials = credentials.get_frozen_credentials()
+    if current_credentials.token:
+        commands = (
+            f"export AWS_ACCESS_KEY_ID={current_credentials.access_key}; "
+            f"export AWS_SECRET_ACCESS_KEY={current_credentials.secret_key}; "
+            f"export AWS_SESSION_TOKEN={current_credentials.token};"
+        )
+    else:
+        commands = (
+            f"export AWS_ACCESS_KEY_ID={current_credentials.access_key}; "
+            f"export AWS_SECRET_ACCESS_KEY={current_credentials.secret_key};"
+        )
+    print(commands)
 
-    print(f"export AWS_ACCESS_KEY_ID={current_credentials.access_key}")
-    print(f"export AWS_SECRET_ACCESS_KEY={current_credentials.secret_key}")
-    print(f"export AWS_SESSION_TOKEN={current_credentials.token}")
+
+def print_environment_powershell(session):
+    """Set environment variables in PowerShell"""
+    credentials = session.get_credentials()
+    current_credentials = credentials.get_frozen_credentials()
+    if current_credentials.token:
+        commands = (
+            f"$Env:AWS_ACCESS_KEY_ID='{current_credentials.access_key}'; "
+            f"$Env:AWS_SECRET_ACCESS_KEY='{current_credentials.secret_key}'; "
+            f"$Env:AWS_SESSION_TOKEN='{current_credentials.token}';"
+        )
+    else:
+        commands = (
+            f"$Env:AWS_ACCESS_KEY_ID='{current_credentials.access_key}'; "
+            f"$Env:AWS_SECRET_ACCESS_KEY='{current_credentials.secret_key}';"
+        )
+    print(commands)
 
 
 def add_cli_arguments(parser):
@@ -33,7 +60,10 @@ def cli(args):
 
     try:
         result = create_session(**inputs)
-        print_export_commands(result)
+        if os.name == "nt":
+            print_environment_powershell(result)
+        else:
+            print_environment_bash(result)
     except Exception as e:
         print(f"Action failed - {e}")
         exit(1)
