@@ -3,8 +3,7 @@ from .discover_inactive_users import discover_inactive_users
 from .discover_no_mfa_users import discover_no_mfa_users
 from .discover_old_access_keys import discover_old_access_keys
 from .discover_old_password_users import discover_old_password_users
-from .discover_permissive_inline_policies import \
-    discover_permissive_inline_policies
+from .discover_permissive_inline_policies import discover_permissive_inline_policies
 from .discover_permissive_policies import discover_permissive_policies
 from .discover_unused_access_keys import discover_unused_access_keys
 from .discover_unused_roles import discover_unused_roles
